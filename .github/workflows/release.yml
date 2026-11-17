@@ -1,0 +1,37 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 从 CHANGELOG 抽出当前版本的说明
+        id: notes
+        shell: python
+        run: |
+          import os, re
+          tag = os.environ["GITHUB_REF_NAME"]              # v1.0.0
+          text = open("CHANGELOG.md", encoding="utf-8").read()
+          pat = re.compile(r"^## \[" + re.escape(tag) + r"\].*?(?=^## \[|\Z)", re.M | re.S)
+          m = pat.search(text)
+          body = m.group(0).strip() if m else ("## " + tag)
+          with open("notes.md", "w", encoding="utf-8") as f:
+              f.write(body)
+          print(body[:400])
+
+      - name: 创建 Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: ${{ github.ref_name }}
+          body_path: notes.md
+          draft: false
+          prerelease: ${{ contains(github.ref_name, "-") }}

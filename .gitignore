@@ -1,0 +1,33 @@
+# ---- 本地数据（绝不入库）----
+config.json
+config.local.json
+state/
+*_profile/
+chat_profile/
+browser_profile/
+bank.sqlite
+*.log
+
+# ---- 构建产物 ----
+dist/
+dist_inst/
+build*/
+*.spec
+*.exe
+*.pyd
+app_src/
+obf/
+
+# ---- 其它 ----
+__pycache__/
+*.pyc
+.venv/
+venv/
+node_modules/
+.DS_Store
+Thumbs.db
+
+# 截图可能含个人信息，只提交 assets/ 里挑过的
+state_shots/
+*.html
+!index.html
