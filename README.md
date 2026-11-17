@@ -4,7 +4,7 @@
 >
 > **这个仓库只公开它怎么做到的**：架构、原理、用到的工具、当前版本的局限，以及少量可以独立阅读的代码片段。**不提供**可直接运行的完整源码、打包好的 exe、任何登录态或题库数据。
 
-当前公开版本：**v2.0.0**（[更新日志](CHANGELOG.md) · [版本索引](docs/versions/README.md)）
+当前公开版本：**v2.0.2**（[更新日志](CHANGELOG.md) · [版本索引](docs/versions/README.md)）
 
 ![主界面](assets/screenshot.png)
 
