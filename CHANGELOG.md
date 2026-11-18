@@ -1,5 +1,14 @@
 # 更新日志
 
+## [v2.1.1] - 2026-11-19
+
+一句话：**修好「一进小节、点开任务点就崩」的两个漏定义。**
+
+- 修 `TypeError: 'NoneType' object is not callable`：任务点完成判定 `card_done_checker()` 忘了 `return check`
+- 修 `NameError: name '_browser_closed' is not defined`：补回「浏览器窗口被关了 / Edge 崩了」的判定，按中断收尾，不再甩 traceback
+- 顺手修两处同类：AI 文字答案日志用了没导入的 `short`；磨砂卡片备用绘制路径里 `blur` 没定义
+- 细节见 `docs/versions/v2.1.1.md`
+
 ## [v2.1.0] - 2026-11-19
 
 一句话：**能读文档、能填填空，目录实时同步，范围自己选。**
