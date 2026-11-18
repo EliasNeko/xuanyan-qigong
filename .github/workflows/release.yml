@@ -4,6 +4,11 @@ on:
   push:
     tags:
       - "v*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "要发版的 tag（例如 v2.1.0），必须已经推送到仓库"
+        required: true
 
 permissions:
   contents: write
@@ -13,13 +18,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.tag || github.ref }}
+          fetch-depth: 0
 
       - name: 从 CHANGELOG 抽出当前版本的说明
         id: notes
-        shell: python
+        env:
+          REF_NAME: ${{ inputs.tag || github.ref_name }}
         run: |
+          python3 - <<'PY'
           import os, re
-          tag = os.environ["GITHUB_REF_NAME"]              # v1.0.0
+          tag = os.environ["REF_NAME"]              # v1.0.0
           text = open("CHANGELOG.md", encoding="utf-8").read()
           pat = re.compile(r"^## \[" + re.escape(tag) + r"\].*?(?=^## \[|\Z)", re.M | re.S)
           m = pat.search(text)
@@ -27,11 +37,13 @@ jobs:
           with open("notes.md", "w", encoding="utf-8") as f:
               f.write(body)
           print(body[:400])
+          PY
 
       - name: 创建 Release
         uses: softprops/action-gh-release@v2
         with:
-          name: ${{ github.ref_name }}
+          name: ${{ inputs.tag || github.ref_name }}
+          tag_name: ${{ inputs.tag || github.ref_name }}
           body_path: notes.md
           draft: false
-          prerelease: ${{ contains(github.ref_name, "-") }}
+          prerelease: ${{ contains(inputs.tag || github.ref_name, '-') }}

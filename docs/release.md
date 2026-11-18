@@ -41,7 +41,17 @@ git push origin main --tags
 2. 从 `CHANGELOG.md` 里抽出「## [vX.Y.Z]」这一节当 Release 正文；
 3. 建一个 GitHub Release（标题带版本号，正文就是更新说明）。
 
-也可以手动：仓库 → Releases → Draft a new release → 选 tag → 粘贴 `docs/versions/vX.Y.Z.md` 的内容。
+Actions 没自动跑起来时（tag 推上去没生成 run，历史上有过），三种兜底任选：
+
+```powershell
+# ① 手动触发工作流（需要 workflow_dispatch，release.yml 已支持）
+gh workflow run release.yml -R EliasNeko/xuanyan-qigong -f tag=v2.1.0
+
+# ② 直接建 Release，正文用 CHANGELOG 里那一节
+gh release create v2.1.0 -R EliasNeko/xuanyan-qigong --title "v2.1.0 一句话主题" --notes-file notes.md
+
+# ③ 网页上手动：仓库 → Releases → Draft a new release → 选 tag → 粘贴 docs/versions/vX.Y.Z.md 的内容
+```
 
 ## 5. 版本号怎么定
 
