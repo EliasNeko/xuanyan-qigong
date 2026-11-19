@@ -30,9 +30,16 @@
 │ browser.py      Playwright 会话、登录态判定、窗口最大化/小窗            │
 │ onboard.py      登录向导的后台：抓学习通二维码、豆包(抖音)二维码        │
 │ courses.py      课程列表解析                                          │
-│ chapters.py     章节树扫描、点击、导航、**任务点判定**                  │
+│ chapters.py     章节树扫描、点击、导航、课程首页 → 章节页               │
 │ tree.py         从目录读「每节还剩几个任务点」（knowledgeJobCount）     │
 │ nav.py          进课直达章节：tab 与章节树合成一个轮询                  │
+│ pagesrc.py      读整页源代码（page.content）→ 轻量 DOM：标签条 / 容器 / │
+│                 任务点总数 / unfinishCount / 空目录提示 / 考试入口      │
+│ tp_scan.py      任务点识别：类型规则、标签条 ∪ 容器认领、点标签、换段签名│
+│ taskpoint.py    一个任务点做到完：视频多段 / 文档滚动 / 测验 / 考试分派  │
+│ tp_done.py      完成度复核：页面图标 → 服务器 unfinishCount（每 6 秒）  │
+│ exam_paper.py   期中期末整卷：开始考试、同意须知、交卷、切回原标签页    │
+│ mathkit.py      数学题：识别、LaTeX 压成纯文本、多空拆分、专项提示词    │
 │ player.py       视频播放主循环：保活、弹题、91%/96% 提前判定            │
 │ quiz.py         弹窗题：检测 → 选 → 提交 → 等判分 → 继续               │
 │ exam.py         章节测验整页答题：解析、勾选、自检、提交、读分、找重做  │
